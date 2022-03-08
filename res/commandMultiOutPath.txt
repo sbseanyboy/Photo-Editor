@@ -1,0 +1,5 @@
+res\\commandMultiOutimage1.png
+res\\commandMultiOutimage2.png
+res\\commandMultiOutimage3.png
+res\\commandMultiOutimage4.png
+res\\commandMultiOutimage5.png

@@ -1,0 +1,10 @@
+load res\\RainbowNoFilter.ppm
+blur layer1
+sharpen layer1
+sepia layer1
+greyscale layer1
+addLayerFromFile res\\KenjiNoFilter.ppm
+removeLayer layer2
+flipTransparency layer1
+setCurrent layer1
+save res\\singleAllCommandsOut.jpg

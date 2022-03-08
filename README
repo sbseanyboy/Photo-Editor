@@ -1,0 +1,181 @@
+Following is a breakdown of how our program works.
+
+The model.Image class and model.IImage interface:
+To begin with, we chose to represent an image in our program in the model.Image class, which contains
+information on an image's dimensions (height and width) and pixels (as represented by a 2D array
+of pixels). We chose these fields as they are reflective of the general image information provided
+in a PPM file, allowing for easy conversion from a PPM file to an instance of our model.Image class.
+Using this image class to represent an image, we are able to operate on instances of an model.Image
+in our model.ImageModel class.
+
+The model.Image class implements the model.IImage interface, allowing for clients to create their own updated
+model.Image classes and implement the same methods avoiding change to other parts of our code.
+
+The model.Image class and model.IImage interface contain getter methods for various information to be accessed
+to operate on an model.Image, such as GetWidth and GetHeight, which return the dimensions of the model.Image,
+and methods to get the model.Pixel Array of an model.Image, as well as a method to get a specific pixel within
+the model.Pixel Array, when supplied its coordinates.
+
+Instances of an model.Image are created in the ImageUtils class, where ppmToImage reads a PPM file, and
+converts it to an instance of our model.Image file.
+
+The model.Pixel class and model.IPixel interface:
+We represented the pixels in an image in our model.Pixel class, which stores information on each model.Pixel's
+color information (integer values for red, green, and blue). With our model.Pixel representation, we are
+able to operate on individual pixels, assisting with manipulations of Images in our model.ImageModel
+class.
+
+Pixels in an model.Image are gathered from a PPM file in our ppmToImage method in our ImageUtils class,
+which iterates through all the pixel color Information in a PPM file, and creates a new pixel for
+every pixel in the file.
+
+The model.Pixel class implements the model.IPixel interface, allowing for clients to create their own updated
+model.Pixel classes and implement the same methods avoiding change to other parts of our code.
+
+The model.ImageModel Class and model.IModel interface:
+We decided to follow the MVC design pattern in implementing our program, allowing us to manipulate
+images, visualize them to our clients, and take in interactions from our clients. We currently only
+have the Model portion implemented, as we felt that is all that is required by the assignment
+specifications so far.
+
+Our model.ImageModel class contains various methods operating on an model.Image. Most importantly, we have
+implemented the applyFilter and applyColorProcessing methods. applyFilter applies Filter kernels
+(such as Blur and Sharpen) to an instance of our image. applyColorProcessing applies Color
+Processing kernels (such as Sepia and GreyScale) to an instance of our image. The methods return
+a new image, so as not to mutate the original image, but to return a copy that is filtered.
+
+Our model.ImageModel class also contains methods to create new Images. The getCheckerboard method returns
+a checkerboard image given the number of tiles for the checkerboard to be (it currently only returns
+a square checkerboard, and so the supplied number of tiles must be a square of an integer) as well
+as the size of each tile, and the colors to be used. It also contains a getRainbow method that
+returns a Rainbow image of specified width, row height, and colors.
+
+The model.ImageModel class also contains various helpers to simplify the code.
+
+The model.ImageModel class implements the model.IModel interface, allowing for clients to create their own
+updated Model classes and implement the same methods avoiding change to other parts of our code.
+
+The model.IKernel interface and implementing classes (Sepia, Sharpen, Blue, GreyScale, supplyFilter,
+and supplyColorProcessor)
+In our design, we decided to follow the command design pattern to allow for easy extension of our
+code so far. To enable implementation of new filters, we created the model.IKernel interface that
+represents filter Kernels to process images with. The implementing classes listed above contain
+default 2D arrays of doubles that represent Kernel Matrices supplied in the assignment page. the 
+apply() method takes in an instance of an model.ImageModel, and calls the respective method required
+to process the model.Image information through the kernel supplied by the model.IKernel classes.
+
+If a client wanted to add a new filter, they would have to simply create a new Class for that filter
+which implements the model.IKernel class, and write the apply method to call the appropriate method
+(either applyFilter for Filters, or applyColorProcessing for color processing) to successfully
+utilize the Kernel they desire. This prevents any code we wrote from being changed, and avoids
+clutter in the Controller class we plan to design.
+
+We plan to have our Controller class use a HashMap and Scanner to create new instances of these
+classes as specified by the user, meaning that to add a new class, they would simply have to expand
+the HashMap to include the class, with an appropriate string title to call it.
+If the client wants to implement a Kernel with a Different type of model.Image processing other than
+filtering and color processing, they could simply implement the new model.IKernel class, and write a new
+class extending our model.ImageModel in which they implement the method which actually processes the image
+with their new type of supplied kernel. They then make the apply method in their model.IKernel class call
+this new method.
+
+All implementing classes of model.IKernel also have various getter methods, such as getting the width
+and height of the kernel matrix, getting the matrix itself, as well as getting a value at a specific
+index in the matrix. 
+
+If the client simply wants to supply their own kernel to use, they must call either supplyFilter or 
+supplyColorProcessor and feed it their kernel. We made this decision rather than having the 
+constructor in our Blur, filter, sepia, and greyscale classes take in a kernel, because then the 
+client would be able to supply kernels of a different type and our program would apply them,
+regardless of if the kernel does what the class says. For example, the client could feed a blur 
+kernel to a sharpen class instance. Thus, to prevent this we did not provide a constructor that
+takes in a kernel in our Kernel classes, other than the supplyFilter and supplyColorProcessor that
+specifically need a kernel to be supplied by the client, and do not specify a certain functionality.
+
+The controller.ImageUtil class
+All the importing and exporting of images will be done in the ImageUtils() class, where
+calling the ppmToImage() method will take in a ppm file, and return our instance of an model.Image.
+The writePPM method takes in an model.IImage and writes a PPM file from it.
+
+All images used in the assignment are our own.
+
+ASSIGNMENT 2:
+
+CORRECTIONS MADE:
+Made the apply method for IKernel and implementing classes take in an IModel, not an ImageModel.
+Made the constructor for the Pixel class public.
+Fixed indexing error in getImage() method in ImageModel class, and getPixels() method in Image
+class.
+added exceptions to a majority of methods that didn't have them before
+added equalsImage method in image class to easily test sameness of pixels of an image.
+
+The MultiLayerIModel interface and SimpleMultiLayerModel class:
+We chose to have our MultiLayerIModel extend the IModel interface so as to offer all the same
+functionality in the multi layer model as the single layer model. In addition to that, we offered
+various new operations to be able to interact with a multi layer image model, such as the ability
+to add and remove an image layer using addLayer() and removeLayer() methods, the ability to get a
+layer of a specified name using getLayer(), or to get the current layer using getCurrent(). We also
+then implemented the ability to set the current layer to the layer of a specified name using
+setCurrent(), and toggling the transparency of the layer of specified name using flipTransparency().
+We also had a few getter methods for ease of implementation and testing such as getTransparency,
+which gets the transparency value of a supplied image name, as well as getLayers and numLayers that
+got the layers and returned them as an arrayList (for easy output to files) and to easily
+count the number of layers in a multi layer image model.
+
+In the SimpleMultiLayerModel class, we implemented this representation using a hashmap of name
+values to ImageModels to represent layers, a hashmap of name values to booleans to represent
+transparency values of each layer, and an IModel of the current layer. We then implemented the above
+listed methods simply by modifying the two hashmaps or the current layer, adding, removing, changing
+values, and setting values using the methods above. As to implement the previous methods from the
+IModel interface, we simply used delegation, defaulting our multi layer model to apply the
+respective IModel methods to the "current" layer. Currently, our implementation supports toggling
+an image's visibility (transparency) but has no functional use for it. In writing and saving files,
+even if a layer is transparent, we still save it, as we believe the user would still want to store
+it. We think that image transparency may serve more functionality once we implement a view, allowing
+the user to actually see the effect of toggling the transparency, but for now is merely data on a
+layer that is trackable and updateable.
+
+Extensions to ImageUtil:
+We added the batchCommand method to the ImageUtil class to serve as our controller functionality.
+This method essentially took in the scanner supplied by the controller and parsed inputs for
+commands and file/layer names. We had this in ImageUtils because many methods called involved
+reading and writing files, which are functionalities supported in the ImageUtil class. We did this
+but could not simplify calls to a hashmap<String, IKernel> because we needed to support more
+functionality than our command approach offered. We would have used the hashmap to simplify our
+batchCommand method if we could, but also had to create cases in our switch for working with multi
+layer image models, such as adding and removing layers, etc. that could not be expanded in the
+command design and added to a hashMap for simplification. Thus we stuck with a traditional switch
+statement and wrote a batchApply helper to simplify our method as much as we could.
+
+the readFile, readMultiImages, writeFile, and writeSingleFile methods implemented the necessary
+functions listed above in the batchCommand method, supporting reading text files for instructions,
+reading jpg files and png files and writing them to IImages to be operated on, and writing
+MultiLayerIModels and ImageModels to files.
+
+The IImageController interface and ImageController class
+The IImageController interface is our controller interface for an IModel. It has one method called
+controlMethod with which it utilizes the class's input to read files and operate commands on them.
+
+The implementing class ImageController implements this by taking in a readable in the constructor,
+and operating on IModels by parsing through the readable. If the readable provides a text file, then
+the batchCommand method is called and supplied a scanner of the file's contents, and applies all
+the contents according to the file. The file should contain commands as specified in the USEME
+file. If the readable provides "start" then it calls the batchCommand method with System.in as the
+scanner.
+
+The main class:
+the main class contains a sample main method with a System.in supplied to the controller. Run the
+class and write "start" to activate interactive scripting, or write in a text file to execute!
+
+To support the new functionality of downsizing images and applying mosaic filters we created a new model class and interface (ComplexIMageModel and IComplexModel) that extend and implement previous classes and interfaces for abstraction purposes and to prevent altering previous code as much as possible. More specifically IComplexModel extends IModel to retain IModel promised methods and add new methods downScale and applyMosaic. ComplexImageModel extends the previous image model (ImageModel) and implements IComplexModel for a similar purpose. As both of these were quite complex, time and memory-consuming methods we also decided to break these methods up into several helper methods to increase readability and decrease runtime.
+
+Previously the helper method calcPixel in the ImageModel class - used to retrieve an image's pixel channel value according to a given coordinate and channel character - was marked as private, however, because we functionally needed a helper with the exact same functionality within the subclass we decided to change the method into the next most restrictive visibility - default. Similarly, we also needed access to ImageModel's image field in order to have an IImage to operate on, so we decided to also change the visibility for the field to default.
+
+In order to retain and extend functionality for multi-layer models, we had also had to make a corresponding multi-layer interface and class to support the new complex model and interface we made earlier. Therefore we chose to design the interface ComplexMultiLayerImodel that extends the previous MultiLayerIModel as well as ComplexMultiLayerModel that extends SimpleMultiLayerModle and implements CompelxMultiLayerIModel. 
+
+Similar to the previous class and interface we design for extending functionality, these essentially were designed to reuse already written code and extend functionality as unintrusively as possible. However, because our previous multi-layer model built each layer by creating a new ImageModel that did not support the new functionality we were trying to support, we had to override the previous addLayer and getCurrent methods, as well as again making files layers, transparency, and current in parent class SimpleMultiLayerModel the next most restrictive - default - in order for it to be visible to the extending subclass.
+
+In terms of our new view, we made it support our new interface and model rather than the previous ones to also support extended functionality in the GUI.
+
+For inputting command-line arguments plese write java -jar Program.jar first, then write -interactive or any of the three commands and return to run the program.
+

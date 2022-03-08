@@ -1,0 +1,5 @@
+load res\RainbowNoFilter.ppm
+addLayerFromFile res\RainbowNoFilter.ppm
+addLayerFromFile res\RainbowNoFilter.ppm
+removeLayer layer2
+save res\singleRemoveLayerOut.jpg

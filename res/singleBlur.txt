@@ -1,0 +1,3 @@
+load res\\RainbowNoFilter.ppm
+blur layer1
+save res\\singleBlurOut.jpg

@@ -1,0 +1,11 @@
+load res\\RainbowNoFilter.ppm
+addLayerFromFile res\\RainbowNoFilter.ppm
+addLayerFromFile res\\RainbowNoFilter.ppm
+addLayerFromFile res\\RainbowNoFilter.ppm
+addLayerFromFile res\\RainbowNoFilter.ppm
+blur layer1
+sharpen layer2
+sepia layer3
+greyscale layer4
+removeLayer layer5
+save res\\rainbowNoFilterMultiOut.jpg

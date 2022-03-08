@@ -1,0 +1,100 @@
+THE FOLLOWING IS FOR ASSIGNMENT 6.
+ASSIGNMENT 7 INSTRUCTIONS ARE FARTHER DOWN THE FILE.
+
+HOW TO USE OUR PROGRAM:
+the method we recommend to use this program is to run our ImageMain method, and supply "start" if you
+would like to use interactive scripting to load and control images, or supply a text file name in
+the command line to execute the commands listed in the text file.
+
+Supported Script Commands:
+"load" + filepath (as a string): loads an image into an image model (only ppm, jpg, png files)
+names the layer "layer" + the layer number. Sets the loaded image to current
+
+"save" + output file name + ".extension" : saves the image as the file name + the extension
+(i.e. save llama.jpg would save the image file as a llama jpg file.) If the image is multiple
+layers, it saves every layer incrementing in index (i.e. llamaImage1.jpg, llamaImage2.jpg) as well
+as a text file describing the file path to these images as name + "path.txt"
+(as in llamaPath.txt containing the filepath to llamaImage1.jpg and llamaImage2.jpg).
+
+"blur" + layer name (to be filtered): blurs the layer and sets it to current.
+"sharpen" + layer name (to be filtered): sharpens the layer and sets it to current.
+"sepia" + layer name (to be filtered): applies sepia filter to the layer and sets it to current.
+"greyscale" + layer name (to be filtered): applies greyscale filter to the layer and sets it to
+current.
+
+"addLayerFromFile" + filepath (as a string): adds a layer to this image model (single or multi
+layer), making the newest layer current and makes the name "layer" + the layer number.
+
+"removeLayer" + layer name: removes the layer from the multi layer model. does not save file if there
+are no image layers, instead throws an exception.
+
+"setCurrent" + layer name: sets the current layer in the model to the specified layer.
+
+"flipTransparency" + layer name: flips the specified layer's transparency value (either transparent
+or not).
+
+Some notes for easier use:
+All inputs ARE case sensitive (so users are able to save images with the cases they want.)
+You may only operate on an image that has been loaded. You may only load one image at a time.
+not supplying parameters as specified above will cause exceptions to be thrown.  
+
+
+
+ASSIGNMENT 7:
+the method we recommend to use this program is to run our SwingMain method. In the command line,
+supply "-text" if you would like to use the command line for active scripting to load and control
+images. Use "-script", then specify the filepath if you would like to supply a text file name in the
+command line to execute the commands listed in the text file. Lastly, use "-interactive" to activate
+our GUI to load, operate on, and save files.
+
+The supported script commands are as listed above, and do not include the new shrinking and mosaic
+image processing methods, as we are not required to. To utilize these methods, please use our GUI.
+
+HOW TO USE OUR GUI:
+To use our gui, begin by selecting a file. You will do this by selecting the "open file" button at
+the top of the GUI, which will open a file opening menu for you to select a JPG, PNG, PPM, or text
+file. The text file must contain the filepaths of multiple images for a multi layer model, as
+specified in the previous assignment. The file you select will open as an image in the "Showing an
+image" field below the open file button.
+
+You may then operate any of the following operations as desired:
+ADDING A LAYER: hit the "add layer" button in the "Image Layers" panel in the middle of the page,
+which will open a file menu similar to that of "open file." select the same types of files as listed
+above, and the image(s) will be added as layers to the model.
+
+SELECTING A LAYER: hit the dropdown menu directly at the top of the "Image Layers" panel, and select
+which layer you would like to set as current, and operate on.
+
+REMOVING A LAYER: the "remove selected layer" button in the "Image Layers" panel will remove
+whatever layer is selected as current in the dropdown menu.
+
+APPLYING THE 4 DEFAULT FILTERS: in the "Filtering" panel in the lower center of the GUI, first,
+select a filter to apply by hitting the "Select a filter" button, and then choosing one of the 4
+filters from the menu. Once a filter is selected, the text field next to the "Select a filter"
+button should display the filter you selected. hit the "Apply Filter" button to apply the filter to
+the image, and you can hit it as many times as you would like to apply the selected filter
+repeatedly to the image. To change the filter, simply press the "Select a filter" button again, and
+select a different filter from the menu.
+
+USING SHRINK AND MOSAIC: In the Shrink and Mosaic panel towards the bottom of the GUI, there are 2
+additional panels: Shrink, and Mosaic.
+To shrink an image, simply set the ratios in the text fields to whatever x and y ratio value you
+would like. Then hit the "shrink! button"
+To make an image a mosaic, set the field in the mosaic panel to whatever number of seeds you would
+like to break the mosaic into. Then hit the "make mosaic!" button to apply the change.
+As with the filters, you may click "shrink!" and "applyMosaic!" as many times as you would like to
+process the image more and more. Simply change the fields to change how the processing is applied.
+
+SAVING YOUR FILE: to save your file, hit the "Save file" button at the bottom of the GUI. This will
+open a file save path menu. Type the name of your file as you would like it to be saved, select the
+filepath you would like to save the image to using the various menu features, and hit save to save
+your image to that location. 
+
+EXITING:
+to quit the program, simply hit the exit button at the bottom of the GUI, or the red X on the top
+left of the window.
+
+OTHER: you can minimize and full screen the GUI using the yellow and green button at the top left of
+the window, respectively.
+your image should update automatically in the Image panel of the GUI as you apply the edits.
+

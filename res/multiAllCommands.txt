@@ -1,0 +1,10 @@
+load readMultipleTest.txt
+blur layer1
+sharpen layer5
+sepia layer4
+greyscale layer2
+addLayerFromFile res\\KenjiNoFilter.ppm
+removeLayer layer6
+flipTransparency layer1
+setCurrent layer1
+save res\\multiAllCommandsOut.png

@@ -1,0 +1,5 @@
+res\\RainbowBlur.ppm
+res\\RainbowGrey.ppm
+res\\RainbowNoFilter.ppm
+res\\RainbowSepia.ppm
+res\\RainbowSharpen.ppm
